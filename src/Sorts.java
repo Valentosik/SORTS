@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class Sorts {
 
-    private void swap(int[] array, int a, int b) {
+    private static void swap(int[] array, int a, int b) {
         int tmp = array[a];
         array[a] = array[b];
         array[b] = tmp;
@@ -157,10 +157,59 @@ public class Sorts {
         return sb.toString();
     }
 
+
+    public static void quickSort(int[] array, int from, int to) {
+        if (from < to) {
+            // Опорный элемент
+           int divideIndex = partition(array, from, to);
+            // Выведем массив
+            printSortStep(array, from, to, divideIndex);
+            // Сортируем подмассив левой части
+           quickSort(array, from, divideIndex - 1);
+            // Сортируем подмассив правой части
+           quickSort(array, divideIndex, to);
+        }
+
+    }
+
+    private static int partition(int[] array, int from, int to) {
+        int leftIndex = from;
+        int rightIndex = to;
+
+        int pivot = array[from];
+
+        while (leftIndex <= rightIndex) {
+            while (array[leftIndex] < pivot) {
+                leftIndex++;
+            }
+
+            while (array[rightIndex] > pivot) {
+                rightIndex--;
+            }
+
+            if (leftIndex <= rightIndex) {
+                swap(array, rightIndex, leftIndex);
+                leftIndex++;
+                rightIndex--;
+            }
+        }
+
+        return leftIndex;
+    }
+
+    private static void printSortStep(int[] arr, int from, int to, int partitionIndex) {
+        System.out.print(arrayToString(arr));
+        System.out.print("\npartition at index: " + partitionIndex);
+        System.out.print(", left: " + arrayToString(Arrays.copyOfRange(arr, from, partitionIndex)));
+        System.out.println(", right: " + arrayToString(Arrays.copyOfRange(arr, partitionIndex, to + 1)) + "\n");
+    }
+
     public static void main(String[] args) {
         int[] array = {10, 2, 10, 3, 1, 0, 12, 8};
         Sorts a = new Sorts();
-        a.mergeSort(array);
+
+        Sorts.quickSort(array, 0 , array.length- 1);
+
     }
 
 
