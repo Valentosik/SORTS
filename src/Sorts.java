@@ -204,6 +204,58 @@ public class Sorts {
         System.out.println(", right: " + arrayToString(Arrays.copyOfRange(arr, partitionIndex, to + 1)) + "\n");
     }
 
+
+
+
+
+    public static int searchLiner(int[] array, int elementToFind) {
+        for (int i = 0; i < array.length; i++) {
+            if (elementToFind == array[i]) {
+                return i;
+            }
+        }
+        return - 1;
+    }
+
+
+    public static int binarySearch(int[] sortedArray, int key, int low, int high) {
+        if (high >= low) {
+            int middle = low + (high - low) / 2;
+
+            if (sortedArray[middle] == key) {
+                return middle;
+            }
+
+            if (sortedArray[middle] > key) {
+                return binarySearch(sortedArray, key, low, middle - 1);
+            } else {
+                return binarySearch(sortedArray, key, middle + 1, high);
+            }
+        }
+
+        return -1;
+    }
+
+    public static int searchBinary(int[] sortedArray, int key, int low, int high) {
+        int startIndex = 0;
+        int middle;
+        int endIndex = sortedArray.length - 1;
+
+        while (startIndex <= endIndex) {
+            middle = startIndex + (endIndex - startIndex) / 2;
+
+            if (sortedArray[middle] == key) {
+                return middle;
+            }
+            if (sortedArray[middle] > key) {
+                endIndex = middle - 1;
+            } else {
+                startIndex = middle + 1;
+            }
+        }
+        return -1;
+    }
+
     public static void main(String[] args) {
         int[] array = {10, 2, 10, 3, 1, 0, 12, 8};
         Sorts a = new Sorts();
